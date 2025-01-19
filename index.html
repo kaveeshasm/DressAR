@@ -3,37 +3,33 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>AR 3D Model</title>
+    <title>Markerless AR Model</title>
+    <!-- A-Frame library -->
     <script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
+    <!-- AR.js library -->
+    <script src="https://cdn.jsdelivr.net/gh/AR-js-org/AR.js/aframe/build/aframe-ar.js"></script>
   </head>
   <body style="margin: 0; overflow: hidden;">
-    <a-scene>
-      <!-- Add a light source to illuminate the model -->
-      <a-light type="directional" position="0 5 5" intensity="1"></a-light>
-
-      <!-- Define the camera and make it look at the model -->
-      <a-camera position="0 1.6 3"></a-camera>
-
-      <!-- Add AR support -->
+    <!-- A-Frame scene with AR.js for world tracking -->
+    <a-scene 
+      embedded 
+      arjs="sourceType: webcam; debugUIEnabled: false; worldTracking: true;" 
+      renderer="antialias: true; alpha: true;" 
+      camera>
+      
+      <!-- Ambient light -->
       <a-light type="ambient" color="#fff" intensity="0.5"></a-light>
 
-      <!-- Add the 3D model -->
+      <!-- 3D model that can be placed anywhere in the environment -->
       <a-entity
         gltf-model="./assets/model.gltf"
-        position="0 0 0"
         scale="0.5 0.5 0.5"
-        animation-mixer
-      ></a-entity>
+        position="0 0 0"
+        animation-mixer>
+      </a-entity>
 
-      <!-- AR Marker -->
-      <a-entity
-        id="ar-camera"
-        camera
-        look-controls
-        touch-enabled="true"
-        raycaster="objects: .clickable"
-        cursor="fuse: true; maxDistance: 10; rayOrigin: mouse"
-      ></a-entity>
+      <!-- Camera with AR capabilities -->
+      <a-camera></a-camera>
     </a-scene>
   </body>
 </html>
