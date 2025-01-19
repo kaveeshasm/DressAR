@@ -1,0 +1,14 @@
+/* Reset margins and remove scrollbars */
+body {
+    margin: 0;
+    overflow: hidden;
+    font-family: Arial, sans-serif;
+  }
+  
+  /* Add some customization for text (optional) */
+  h1 {
+    text-align: center;
+    color: #333;
+    margin-top: 20px;
+  }
+  
