@@ -13,7 +13,7 @@
     <!-- A-Frame scene with AR.js for world tracking -->
     <a-scene 
       embedded 
-      arjs="sourceType: webcam; debugUIEnabled: false; worldTracking: true;" 
+      arjs="sourceType: webcam; debugUIEnabled: true; worldTracking: true;" 
       renderer="antialias: true; alpha: true;" 
       camera>
       
@@ -31,5 +31,22 @@
       <!-- Camera with AR capabilities -->
       <a-camera></a-camera>
     </a-scene>
+
+    <!-- Instructions to enable camera if it isn't enabled automatically -->
+    <script>
+      // Request camera permissions
+      if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
+        navigator.mediaDevices.getUserMedia({ video: true })
+          .then(function (stream) {
+            console.log("Camera permission granted");
+          })
+          .catch(function (err) {
+            console.error("Camera permission denied: ", err);
+            alert("Please enable camera access to view the AR model.");
+          });
+      } else {
+        alert("Camera is not supported on this device.");
+      }
+    </script>
   </body>
 </html>
