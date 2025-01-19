@@ -3,16 +3,46 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-  <title>AR.js 3D Model</title>
+  <title>AR.js 3D Model with Markerless AR</title>
+  
+  <!-- A-Frame for 3D scene -->
   <script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
+  
+  <!-- AR.js for AR functionality -->
   <script src="https://cdn.jsdelivr.net/gh/jeromeetienne/ar.js/aframe/build/aframe-ar.min.js"></script>
 </head>
 <body style="margin: 0; overflow: hidden;">
-  <a-scene embedded arjs="debugUIEnabled: true">
-    <a-marker preset="hiro">
-      <a-entity gltf-model="./assets/model.gltf" scale="0.5 0.5 0.5" position="0 0 0"></a-entity>
-    </a-marker>
-    <a-entity camera></a-entity>
+
+  <!-- AR Scene setup with Markerless AR (world tracking) -->
+  <a-scene embedded arjs="sourceType: webcam; debugUIEnabled: false; worldTracking: true;" renderer="antialias: true; alpha: true;" camera="userHeight: 1.6;">
+
+    <!-- Ambient Light for the scene -->
+    <a-light type="ambient" color="#fff" intensity="0.5"></a-light>
+
+    <!-- 3D Model to display in AR -->
+    <a-entity gltf-model="assets/model.gltf" scale="0.5 0.5 0.5" position="0 0 0" animation-mixer></a-entity>
+
+    <!-- AR Camera -->
+    <a-camera></a-camera>
+
   </a-scene>
+
+  <!-- Request camera permission -->
+  <script>
+    // Check and request camera permission
+    if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
+      navigator.mediaDevices.getUserMedia({ video: true })
+        .then(function (stream) {
+          console.log("Camera permission granted");
+        })
+        .catch(function (err) {
+          console.error("Camera permission denied: ", err);
+          alert("Please enable camera access to view the AR model.");
+        });
+    } else {
+      alert("Camera is not supported on this device.");
+    }
+  </script>
+
 </body>
 </html>
