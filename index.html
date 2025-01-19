@@ -1,18 +1,39 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-  <title>AR.js 3D Model</title>
-  <script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/gh/jeromeetienne/ar.js/aframe/build/aframe-ar.min.js"></script>
-</head>
-<body style="margin: 0; overflow: hidden;">
-  <a-scene embedded arjs="debugUIEnabled: true">
-    <a-marker preset="hiro">
-      <a-entity gltf-model="./assets/model.gltf" scale="0.5 0.5 0.5" position="0 0 0"></a-entity>
-    </a-marker>
-    <a-entity camera></a-entity>
-  </a-scene>
-</body>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>AR 3D Model</title>
+    <script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
+  </head>
+  <body style="margin: 0; overflow: hidden;">
+    <a-scene>
+      <!-- Add a light source to illuminate the model -->
+      <a-light type="directional" position="0 5 5" intensity="1"></a-light>
+
+      <!-- Define the camera and make it look at the model -->
+      <a-camera position="0 1.6 3"></a-camera>
+
+      <!-- Add AR support -->
+      <a-light type="ambient" color="#fff" intensity="0.5"></a-light>
+
+      <!-- Add the 3D model -->
+      <a-entity
+        gltf-model="./assets/model.gltf"
+        position="0 0 0"
+        scale="0.5 0.5 0.5"
+        animation-mixer
+      ></a-entity>
+
+      <!-- AR Marker -->
+      <a-entity
+        id="ar-camera"
+        camera
+        look-controls
+        touch-enabled="true"
+        raycaster="objects: .clickable"
+        cursor="fuse: true; maxDistance: 10; rayOrigin: mouse"
+      ></a-entity>
+    </a-scene>
+  </body>
 </html>
